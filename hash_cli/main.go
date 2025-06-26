@@ -1,4 +1,14 @@
+package main
+
+/*
+#cgo LDFLAGS: -L. -lhashlib
+#include <stdlib.h>
+
+char* hash_sha256(const char* input);
+void free_string(char* s);
+*/
 import "C"
+
 import (
 	"fmt"
 	"unsafe"

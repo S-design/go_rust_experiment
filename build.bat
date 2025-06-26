@@ -3,6 +3,7 @@ echo building the rust library
 cd rust_lib
 cargo build --release
 cd ..
-copy rust_lib\target\release\hashlib.dll go_app\
+echo copying dll to the go app folder
+copy rust_lib\target\release\hashlib.dll hash_cli\
 echo done and dusted
 pause
