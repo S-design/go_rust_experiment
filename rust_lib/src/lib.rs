@@ -6,14 +6,12 @@ use std::os::raw::c_char;
 pub extern "C" fn hash_sha256(input: *const c_char) -> *mut c_char {
     let c_str = unsafe { CStr::from_ptr(input) };
     let str_slice = c_str.to_str().unwrap_or("");
-
-    let mut hasher = sha256::new();
+//creating the hasher and input process
+    let mut hasher = Sha256::new();
     hasher.update(str_slice.as_bytes());
     let result = hasher.finalize();
 
-    let hex_string = sha256::new();
-    hasher.update(str_slice.as_bytes());
-    let result = hasher.finalize();
+//returning th C-compatible string that Go can read
     let hex_string = format!("{:x}", result);
     CString::new(hex_string).unwrap().into_raw()
 }
@@ -22,6 +20,6 @@ pub extern "C" fn hash_sha256(input: *const c_char) -> *mut c_char {
 pub extern "C" fn free_string(s: *mut c_char) {
     unsafe {
         if s.is_null() {return}
-        CString::from_raw(s);
+        let _ = CString::from_raw(s);
     }
 }
